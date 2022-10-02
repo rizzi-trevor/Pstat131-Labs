@@ -94,6 +94,9 @@ Try updating the code in the following code chunk. Assign `2+2` to another objec
 # For example:
 x <- seq(1, 10, 1)
 x
+
+y<- 2 + 2
+
 ```
 
 Take some time and work through the Markdown tutorial here: [www.markdown-tutorial.com](www.markdown-tutorial.com).
@@ -105,9 +108,9 @@ In Markdown, code chunks can have specific options set for them; you can also se
 First, you'll need to install and load some packages. These include, but are not limited to: `tidyverse`, `tidymodels`, and `ISLR`. Make sure to install each of these using the `install.packages()` function and load them with `library()`. You'll need to uncomment the `install` lines below:
 
 ```{r}
-# install.packages("tidyverse")
-# install.packages("tidymodels")
-# install.packages("ISLR")
+install.packages("tidyverse",repos = "http://cran.us.r-project.org")
+install.packages("tidymodels", repos = "http://cran.us.r-project.org")
+install.packages("ISLR", repos = "http://cran.us.r-project.org")
 
 library(tidyverse)
 library(tidymodels)
