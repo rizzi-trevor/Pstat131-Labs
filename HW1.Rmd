@@ -92,7 +92,7 @@ As number of cylinders increases, the highway mileage tends to decrease
 
 ### Exercise 5
 ```{r}
-install.packages("corrplot")
+install.packages("corrplot", repos = "http://cran.us.r-project.org")
 library(corrplot)
 
 M <- mpg %>%
