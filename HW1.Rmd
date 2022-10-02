@@ -2,7 +2,11 @@
 title: "HW1"
 author: "Trevor Rizzi"
 date: "2022-10-02"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
 ---
 
 ```{r setup, include=FALSE}
@@ -58,7 +62,7 @@ library(tidymodels)
 library(ISLR)
 ```
 
-###Exercise 1
+### Exercise 1
 ```{r}
 hwyMpg <- mpg$hwy
 hist(hwyMpg)
