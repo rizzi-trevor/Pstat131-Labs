@@ -104,4 +104,4 @@ corrplot(M)
 ```
 
 Number of cylinders and engine displacement are positively correlated, which makes sense because typically more cylinders = bigger engine
-hwy and cty mileages are also positively correlated. Both the hwy and cty have a negative correlation with the number of cylinders, implying that engines with more cylinders are less efficient. 
+hwy and cty mileages are also positively correlated. Both the hwy and cty have a negative correlation with the number of cylinders, implying that engines with more cylinders are less efficient.  d 
