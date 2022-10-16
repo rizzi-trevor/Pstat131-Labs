@@ -1,0 +1,111 @@
+---
+title: "HW1"
+author: "Trevor Rizzi"
+date: "2022-10-02"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework 1
+### Question 1
+Supervised learning: In supervised learning, the Y data is actually known and used for training the model.
+                        Model is given the observed output and input (from lecture slides day 1)
+Unsupervised learning: The response data is unknown, so the model is only given predictors and is to come up with a fit based on them
+
+Supervised learning trains itself based on inputs and outputs while unsupervised has to determine the structure between inputs on its own.
+
+### Question 2
+In a regression model, Y is quantitative (numerical values) whereas classification is qualitative (categorical values) - (lecture slides day 1).
+In machine learning a quantitative model will be numerically based and a classification model will have categorical labels instead.
+
+### Question 3
+Regression commonly used metrics: age, height
+Classification commonly used metrics: color, win/ loss
+
+### Question 4
+Descriptive models: "Choose a model to best visually emphasize a trend in data" (lecture slides day 1)
+Inferential models: "Aim is to test theories ... State relationship between outcomes and predictors" (lecture slides day 1)
+Predictive models:  "Aim is to predict Y with minimum reducible error ... Not focused on hypothesis tests" (lecture slides day 1)
+
+### Question 5
+Mechanistic: Parametric, uses the parametric form to predict what could be observed.
+Emperically-driven: Non-parametric, uses real observations to develop a theory.
+
+Mechanistic models are typically less flexible but can that can differ based on # of parameters. Emperically driven models require a larger
+quantity of observations
+
+I think empirically-driven models are easier to understand since it is coming to a theoretical conclusion based off of real world events/obersvations. It is more straight forward.
+
+It is ideal to simultaneously achieve a low variance and low bias. A simple model which is typically mechanistic will have a high bias and low variance. An empirical model will have a high flexibility and therefore a low bias and high variance
+
+### Question 6
+Given a voter’s profile/data, how likely is it that they will vote in favor of the candidate?
+  This is predictive as the aim is to predict a Y (whether they will vote for a candidate) with minimum error.
+How would a voter’s likelihood of support for the candidate change if they had personal contact with the candidate?
+  This is inferential as it is trying to establish a relationship between the outcome (likelihood of support) and predictors(contact with candidate)
+
+
+```{r}
+install.packages("tidyverse",repos = "http://cran.us.r-project.org")
+install.packages("tidymodels", repos = "http://cran.us.r-project.org")
+install.packages("ISLR", repos = "http://cran.us.r-project.org")
+
+library(tidyverse)
+library(tidymodels)
+library(ISLR)
+```
+
+### Exercise 1
+```{r}
+hwyMpg <- mpg$hwy
+hist(hwyMpg)
+
+```
+The histogram is bimodal, with peaks its between 15-20 mpg and 25-30 mph suggesting that these ranges are the most common highway mileages.
+
+### Exercise 2
+```{r}
+ggplot(mpg, aes(x = hwy, y = cty)) + geom_point()
+
+
+```
+
+The scatterplot suggests a linear relationship between cty and hwy. This means that as the city mileage increases, the highway mileage will also increase.
+
+### Exercise 3
+```{r}
+ggplot(mpg, aes(y = reorder(manufacturer, manufacturer, function(x)-length(x)))) + geom_bar()
+
+```
+Dodge produced the most cars, lincoln produced the least.
+
+### Exercise 4
+```{r}
+ggplot(mpg, aes(y = hwy, x = cyl, group = cyl)) + geom_boxplot()
+
+
+```
+As number of cylinders increases, the highway mileage tends to decrease
+
+### Exercise 5
+```{r}
+install.packages("corrplot", repos = "http://cran.us.r-project.org")
+library(corrplot)
+
+M <- mpg %>%
+    select_if(is.numeric) %>%
+    cor(.)
+
+corrplot(M)
+
+```
+
+Number of cylinders and engine displacement are positively correlated, which makes sense because typically more cylinders = bigger engine
+hwy and cty mileages are also positively correlated. Both the hwy and cty have a negative correlation with the number of cylinders, implying that engines with more cylinders are less efficient.  d 
