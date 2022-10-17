@@ -1,0 +1,137 @@
+---
+title: "HW2"
+author: "Trevor Rizzi"
+date: "2022-10-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Homework 1
+
+```{r}
+
+library(ggplot2)
+library(tidyverse)
+library(tidymodels)
+library(corrplot)
+library(ggthemes)
+library(dplyr)
+tidymodels_prefer()
+abalone <- data.frame(read_csv("/Users/trevorrizz/Downloads/homework-2/data/abalone.csv"));
+
+```
+
+### Question 1
+
+```{r}
+
+abalone <- abalone %>%
+  mutate(age=rings + 1.5)
+
+
+abalone %>% 
+  ggplot(aes(x = age)) +
+  geom_histogram(bins = 60) +
+  theme_bw()
+
+
+```
+Abalone age resembles a normal distribution with a mean around 10 years of age.
+
+### Question 2
+```{r}
+set.seed(12323)
+
+abalone_split <- initial_split(abalone, prop = .85, strata = age)
+abalone_train <- training(abalone_split)
+abalone_test <- testing(abalone_split)
+
+
+
+```
+
+
+### Question 3
+```{r}
+abalone_recipe <- recipe(age ~ type + longest_shell + diameter + height + 
+                        whole_weight + shucked_weight + viscera_weight + 
+                        shell_weight, data = abalone_train) %>%
+  step_dummy_multi_choice(all_nominal_predictors()) %>%
+  prep()
+
+summary(abalone_recipe)
+
+
+
+abalone_recipe <- abalone_recipe %>%
+  step_interact(~ type_F:type_I:type_M:shucked_weight + longest_shell:diameter + shucked_weight:shell_weight) %>%
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors())
+
+
+
+
+
+```
+We cannot use rings as a predictor for age because of how they were used to calculate the
+age for each abalone. The number of rings and abalone age are linearly related, so using that
+as a predictor would affect the model.
+
+
+### Question 4
+```{r}
+
+lm_model <- linear_reg() %>% 
+  set_engine("lm")
+
+
+```
+
+
+### Question 5
+```{r}
+
+lm_wflow <- workflow() %>% 
+  add_model(lm_model) %>% 
+  add_recipe(abalone_recipe)
+
+
+```
+
+### Question 6
+```{r}
+lm_fit <- fit(lm_wflow,abalone_train)
+
+predict(lm_fit, new_data = expand.grid(longest_shell = .50,
+                                       diameter = .10,
+                                       height = .30,
+                                       whole_weight = 4,
+                                       shucked_weight = 1,
+                                       viscera_weight = 2,
+                                       shell_weight = 1,
+                                       type = "F")) ### 24.03469 years
+
+
+```
+
+### Question 7
+```{r}
+
+library(yardstick)
+
+abs_set <- metric_set(rsq, rmse, mae)
+
+abs_tbl <- bind_cols(abalone_train$age, predict(lm_fit, abalone_train))
+
+names(abs_tbl)[1] <- "truth"
+names(abs_tbl)[2] <- "pred"
+
+
+abs_set(abs_tbl, truth = truth , estimate = pred)
+
+```
+
+
