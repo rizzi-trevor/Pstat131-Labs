@@ -132,6 +132,14 @@ names(abs_tbl)[2] <- "pred"
 
 abs_set(abs_tbl, truth = truth , estimate = pred)
 
+
+
 ```
+RSQ = .5500
+RMSE = 2.1687
+MAE = 1.561
+
+
+About 55% of the variability in predicted age is explained by the actual age of abalone. This is moderate
 
 
