@@ -48,8 +48,8 @@ Think about which of these variables we might want to predict with a machine lea
 
 #### Activities:
 
-- How many observations are there in `diamonds`?
-- How many variables? Of these, how many are features we could use for predicting `price`?
+-   How many observations are there in `diamonds`?
+-   How many variables? Of these, how many are features we could use for predicting `price`?
 
 Run `?diamonds` and look at the variable definitions.
 
@@ -61,20 +61,22 @@ diamonds %>%
   cor() %>% 
   corrplot(type = 'lower', diag = FALSE, 
            method = 'color')
+
+
 ```
 
 Take a moment and look at the arguments in the `corrplot()` function. What does each one do? What happens if you change `diag` to `TRUE` and `method` to `'square'`?
 
 #### Activities:
 
-- Which features are positively correlated with `price`? Do these make sense?
-- Are any features negatively correlated with `price`?
-- Which features are correlated with *each other*? Why do you think this might be?
+-   Which features are positively correlated with `price`? Do these make sense?
+-   Are any features negatively correlated with `price`?
+-   Which features are correlated with *each other*? Why do you think this might be?
 
 Let's make a boxplot of the distribution of `price` per level of `cut` and `color`, to see if there appears to be a relationship between it and these predictors.
 
 ```{r}
-diamonds %>% 
+sdiamonds %>% 
   ggplot(aes(x = price, y = reorder(cut, price), fill = color)) + 
   geom_boxplot() +
   labs(y = "Cut", x = "Price") +
@@ -83,9 +85,9 @@ diamonds %>%
 
 #### Activities:
 
-- What do you learn from this plot about the relationship between `price`, `cut`, and `color`?
+-   What do you learn from this plot about the relationship between `price`, `cut`, and `color`?
 
-- Refer back to the definitions of the variables in `?diamonds`. Does anything you learned surprise you?
+-   Refer back to the definitions of the variables in `?diamonds`. Does anything you learned surprise you?
 
 Since `J` is the worst color for diamonds, why do you think they tend to cost more?
 
@@ -101,7 +103,7 @@ diamonds %>%
 
 #### Activities:
 
-- Explain why lower-quality colors tend to cost more.
+-   Explain why lower-quality colors tend to cost more.
 
 Now we'll assess the distribution of our outcome variable `price`. Let's make a histogram:
 
@@ -116,7 +118,7 @@ Notice that we increased the number of bins here; this allows us to get a more f
 
 #### Activities:
 
-- Create a single plot to visualize the relationship between `cut`, `carat`, and `price`.
+-   Create a single plot to visualize the relationship between `cut`, `carat`, and `price`.
 
 ## Data Splitting
 
@@ -141,9 +143,9 @@ diamonds_test <- testing(diamonds_split)
 
 #### Activities:
 
-- How many observations are now in the training and testing sets, respectively? Report the exact number, not proportion.
+-   How many observations are now in the training and testing sets, respectively? Report the exact number, not proportion.
 
-- What do you think the `strata = price` argument does? Take a guess, then use `?initial_split` to verify.
+-   What do you think the `strata = price` argument does? Take a guess, then use `?initial_split` to verify.
 
 ## Linear Regression
 
@@ -164,7 +166,7 @@ Note that `.` is a placeholder for "all other variables." If we call the recipe 
 simple_diamonds_recipe
 ```
 
-More specifically, we see that there are 9 predictors. 
+More specifically, we see that there are 9 predictors.
 
 We should dummy-code all categorical predictors. We can do that easily with `step` functions:
 
@@ -177,7 +179,7 @@ Note that we haven't specified what type of model we'll be fitting yet. The othe
 
 #### Activities:
 
-- Use the Internet to find documentation about the possible `step` functions. Name three `step` functions that weren't used here and describe what they do.
+-   Use the Internet to find documentation about the possible `step` functions. Name three `step` functions that weren't used here and describe what they do.
 
 Next, we can specify the model engine that we want to fit:
 
@@ -212,9 +214,9 @@ lm_fit %>%
 
 #### Activities:
 
-- Explain what the intercept represents. 
+-   Explain what the intercept represents.
 
-- Describe the effect of `carat`. Is it a significant predictor of `price`? Holding everything else constant, what is the effect on `price` of a one-unit increase in `carat`?
+-   Describe the effect of `carat`. Is it a significant predictor of `price`? Holding everything else constant, what is the effect on `price` of a one-unit increase in `carat`?
 
 Finally, we can calculate the **training** root mean squared error (RMSE).
 
